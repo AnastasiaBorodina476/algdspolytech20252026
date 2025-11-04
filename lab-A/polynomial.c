@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+// Создание нового монома
 Term* create_term(int coeff, int pow) {
     Term* t = (Term*)malloc(sizeof(Term));
     if (!t) return NULL;
@@ -13,6 +14,7 @@ Term* create_term(int coeff, int pow) {
     return t;
 }
 
+// Добавление монома в полином
 Term* add_term(Term* poly, int coeff, int pow) {
     if (coeff == 0) return poly;
 
@@ -44,6 +46,7 @@ Term* add_term(Term* poly, int coeff, int pow) {
     return poly;
 }
 
+// Освобождение памяти полинома
 void free_polynomial(Term* poly) {
     while (poly) {
         Term* tmp = poly;
@@ -52,6 +55,7 @@ void free_polynomial(Term* poly) {
     }
 }
 
+// Сумма двух полиномов
 Term* sum_polynomials(Term* p1, Term* p2) {
     Term* result = NULL;
     Term* t = p1;
@@ -67,6 +71,7 @@ Term* sum_polynomials(Term* p1, Term* p2) {
     return result;
 }
 
+// Произведение двух полиномов
 Term* multiply_polynomials(Term* p1, Term* p2) {
     Term* result = NULL;
     for (Term* t1 = p1; t1; t1 = t1->next) {
@@ -77,6 +82,7 @@ Term* multiply_polynomials(Term* p1, Term* p2) {
     return result;
 }
 
+// Производная полинома
 Term* derivative_polynomial(Term* poly) {
     Term* result = NULL;
     while (poly) {
@@ -88,6 +94,7 @@ Term* derivative_polynomial(Term* poly) {
     return result;
 }
 
+// Парсинг строки полинома
 Term* parse_polynomial(const char* str) {
     Term* poly = NULL;
     const char* p = str;
@@ -95,11 +102,16 @@ Term* parse_polynomial(const char* str) {
     while (*p) {
         int coeff = 1, pow = 0;
         int read = 0;
+
+        // Пропускаем пробелы
         while (*p == ' ') p++;
+
+        // Читаем коэффициент
         if (sscanf_s(p, "%d%n", &coeff, &read) == 1) {
             p += read;
         }
 
+        // Читаем x^pow
         if (*p == 'x') {
             p++;
             pow = 1;
@@ -112,12 +124,15 @@ Term* parse_polynomial(const char* str) {
         }
 
         poly = add_term(poly, coeff, pow);
+
+        // Пропуск + или -
         while (*p == ' ' || *p == '+' || *p == '-') p++;
     }
 
     return poly;
 }
 
+// Преобразование полинома в строку
 void polynomial_to_string(Term* poly, char* buffer, int size) {
     if (!poly) {
         strncpy_s(buffer, size, "0", _TRUNCATE);
@@ -149,7 +164,7 @@ void polynomial_to_string(Term* poly, char* buffer, int size) {
     }
 }
 
-
+// Сортировка полинома по степеням (от x^0 к старшей)
 Term* sort_polynomial(Term* poly) {
     if (!poly || !poly->next) return poly;
 
