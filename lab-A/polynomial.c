@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Ñîçäàíèå íîâîãî ìîíîìà
+// Ð¡Ð¾Ð·Ð´Ð°Ð½Ð¸Ðµ Ð½Ð¾Ð²Ð¾Ð³Ð¾ Ð¼Ð¾Ð½Ð¾Ð¼Ð°
 Term* create_term(int coeff, int pow) {
     Term* t = (Term*)malloc(sizeof(Term));
     if (!t) return NULL;
@@ -14,7 +14,7 @@ Term* create_term(int coeff, int pow) {
     return t;
 }
 
-// Äîáàâëåíèå ìîíîìà â ïîëèíîì
+// Ð”Ð¾Ð±Ð°Ð²Ð»ÐµÐ½Ð¸Ðµ Ð¼Ð¾Ð½Ð¾Ð¼Ð° Ð² Ð¿Ð¾Ð»Ð¸Ð½Ð¾Ð¼
 Term* add_term(Term* poly, int coeff, int pow) {
     if (coeff == 0) return poly;
 
@@ -46,7 +46,7 @@ Term* add_term(Term* poly, int coeff, int pow) {
     return poly;
 }
 
-// Îñâîáîæäåíèå ïàìÿòè ïîëèíîìà
+// ÐžÑÐ²Ð¾Ð±Ð¾Ð¶Ð´ÐµÐ½Ð¸Ðµ Ð¿Ð°Ð¼ÑÑ‚Ð¸ Ð¿Ð¾Ð»Ð¸Ð½Ð¾Ð¼Ð°
 void free_polynomial(Term* poly) {
     while (poly) {
         Term* tmp = poly;
@@ -55,7 +55,7 @@ void free_polynomial(Term* poly) {
     }
 }
 
-// Ñóììà äâóõ ïîëèíîìîâ
+// Ð¡ÑƒÐ¼Ð¼Ð° Ð´Ð²ÑƒÑ… Ð¿Ð¾Ð»Ð¸Ð½Ð¾Ð¼Ð¾Ð²
 Term* sum_polynomials(Term* p1, Term* p2) {
     Term* result = NULL;
     Term* t = p1;
@@ -71,7 +71,7 @@ Term* sum_polynomials(Term* p1, Term* p2) {
     return result;
 }
 
-// Ïðîèçâåäåíèå äâóõ ïîëèíîìîâ
+// ÐŸÑ€Ð¾Ð¸Ð·Ð²ÐµÐ´ÐµÐ½Ð¸Ðµ Ð´Ð²ÑƒÑ… Ð¿Ð¾Ð»Ð¸Ð½Ð¾Ð¼Ð¾Ð²
 Term* multiply_polynomials(Term* p1, Term* p2) {
     Term* result = NULL;
     for (Term* t1 = p1; t1; t1 = t1->next) {
@@ -82,7 +82,7 @@ Term* multiply_polynomials(Term* p1, Term* p2) {
     return result;
 }
 
-// Ïðîèçâîäíàÿ ïîëèíîìà
+// ÐŸÑ€Ð¾Ð¸Ð·Ð²Ð¾Ð´Ð½Ð°Ñ Ð¿Ð¾Ð»Ð¸Ð½Ð¾Ð¼Ð°
 Term* derivative_polynomial(Term* poly) {
     Term* result = NULL;
     while (poly) {
@@ -94,7 +94,7 @@ Term* derivative_polynomial(Term* poly) {
     return result;
 }
 
-// Ïàðñèíã ñòðîêè ïîëèíîìà
+// ÐŸÐ°Ñ€ÑÐ¸Ð½Ð³ ÑÑ‚Ñ€Ð¾ÐºÐ¸ Ð¿Ð¾Ð»Ð¸Ð½Ð¾Ð¼Ð°
 Term* parse_polynomial(const char* str) {
     Term* poly = NULL;
     const char* p = str;
@@ -103,15 +103,15 @@ Term* parse_polynomial(const char* str) {
         int coeff = 1, pow = 0;
         int read = 0;
 
-        // Ïðîïóñêàåì ïðîáåëû
+        // ÃÃ°Ã®Ã¯Ã³Ã±ÃªÃ Ã¥Ã¬ Ã¯Ã°Ã®Ã¡Ã¥Ã«Ã»
         while (*p == ' ') p++;
 
-        // ×èòàåì êîýôôèöèåíò
+        // Ã—Ã¨Ã²Ã Ã¥Ã¬ ÃªÃ®Ã½Ã´Ã´Ã¨Ã¶Ã¨Ã¥Ã­Ã²
         if (sscanf_s(p, "%d%n", &coeff, &read) == 1) {
             p += read;
         }
 
-        // ×èòàåì x^pow
+        // Ã—Ã¨Ã²Ã Ã¥Ã¬ x^pow
         if (*p == 'x') {
             p++;
             pow = 1;
@@ -125,14 +125,14 @@ Term* parse_polynomial(const char* str) {
 
         poly = add_term(poly, coeff, pow);
 
-        // Ïðîïóñê + èëè -
+        // ÃÃ°Ã®Ã¯Ã³Ã±Ãª + Ã¨Ã«Ã¨ -
         while (*p == ' ' || *p == '+' || *p == '-') p++;
     }
 
     return poly;
 }
 
-// Ïðåîáðàçîâàíèå ïîëèíîìà â ñòðîêó
+// ÐŸÑ€ÐµÐ¾Ð±Ñ€Ð°Ð·Ð¾Ð²Ð°Ð½Ð¸Ðµ Ð¿Ð¾Ð»Ð¸Ð½Ð¾Ð¼Ð° Ð² ÑÑ‚Ñ€Ð¾ÐºÑƒ
 void polynomial_to_string(Term* poly, char* buffer, int size) {
     if (!poly) {
         strncpy_s(buffer, size, "0", _TRUNCATE);
@@ -164,7 +164,7 @@ void polynomial_to_string(Term* poly, char* buffer, int size) {
     }
 }
 
-// Ñîðòèðîâêà ïîëèíîìà ïî ñòåïåíÿì (îò x^0 ê ñòàðøåé)
+// Ð¡Ð¾Ñ€Ñ‚Ð¸Ñ€Ð¾Ð²ÐºÐ° Ð¿Ð¾Ð»Ð¸Ð½Ð¾Ð¼Ð° Ð¿Ð¾ ÑÑ‚ÐµÐ¿ÐµÐ½ÑÐ¼ (Ð¾Ñ‚ x^0 Ðº ÑÑ‚Ð°Ñ€ÑˆÐµÐ¹)
 Term* sort_polynomial(Term* poly) {
     if (!poly || !poly->next) return poly;
 
